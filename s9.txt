@@ -1,0 +1,92 @@
+Slip 9
+Q1. Write an Android application to accept two numbers from the user, and display them, but reject input if both numbers are greater than 10 and asks for two new numbers. [10 Marks]
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/number1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter number 1"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/number2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter number 2"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
+    <TextView
+        android:id="@+id/resultView"
+        android:layout_width="211dp"
+        android:layout_height="69dp"
+        android:textSize="20sp" />
+
+</LinearLayout>
+MainActivity.java
+
+package com.example.twonumberslessthan10;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    private EditText number1, number2;
+    private Button submitButton;
+    private TextView resultView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        number1 = findViewById(R.id.number1);
+        number2 = findViewById(R.id.number2);
+        resultView = findViewById(R.id.resultView);
+        submitButton = findViewById(R.id.submitButton);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validNumber();
+            }
+        });
+    }
+
+    private void validNumber() {
+        String numStr1 = number1.getText().toString().trim();
+        String numStr2 = number2.getText().toString().trim();
+
+        int num1 = Integer.parseInt(numStr1);
+        int num2 = Integer.parseInt(numStr2);
+
+        if (num1 > 10 && num2 > 10) {
+            Toast.makeText(MainActivity.this, "Please enter both numbers less than or equal to 10.", Toast.LENGTH_SHORT).show();
+            number1.setText("");
+            number2.setText("");
+            resultView.setText("");
+        } else {
+            resultView.setText("Numbers: " + num1 + " and " + num2);
+        }
+
+    }
+}
+
